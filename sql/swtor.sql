@@ -1,4 +1,5 @@
-create database swtor_db;
+-- create database swtor_db;
+-- the database is already produced by the docker compose
 
 create table characters (
 	id serial primary key not null,
