@@ -1,4 +1,4 @@
-create database swtor_jdbc;
+create database swtor_db;
 
 create table characters (
 	id serial primary key not null,
