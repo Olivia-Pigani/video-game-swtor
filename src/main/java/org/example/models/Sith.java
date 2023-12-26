@@ -1,11 +1,12 @@
 package org.example.models;
 
 import lombok.Data;
+import org.example.models.factories.abstractfactory.ForceUser;
 
 import java.util.List;
 
 @Data
-public class Sith {
+public class Sith implements ForceUser {
 
     private int id;
     private boolean light_saber;

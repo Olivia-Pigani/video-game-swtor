@@ -1,11 +1,12 @@
 package org.example.models;
 
 import lombok.Data;
+import org.example.models.factories.abstractfactory.NonForceUser;
 
 import java.util.List;
 
 @Data
-public class Trooper {
+public class Trooper implements NonForceUser {
 
 
     private int id;
