@@ -45,8 +45,8 @@ create table characters_equipments (
 
 insert into characters (name,light_saber,health,hasforce,team)
 values 
-('Atton Rand',false,50,true,'REPUBLICTEAM'),
-('Goto',false,50,false,'SITHTEAM');
+('Atton Rand',false,50,true,'REPUBLIC'),
+('Goto',false,50,false,'SITH');
 
 
 insert into powers (name,attack_points,health_restorer,team)
@@ -55,10 +55,10 @@ values
 ('Force Choke', 25, 0, 'SITH'),
 ('Force Rage', 20, 0, 'SITH'),
 ('Life Drain', 15, 5, 'SITH'),
-('Force Heal', 0, 20, 'JEDI'),
-('Force Push', 15, 0, 'JEDI'),
-('Force Meditation', 0, 10, 'JEDI'),
-('Blaster Deflection', 10, 0, 'JEDI');
+('Force Heal', 0, 20, 'REPUBLIC'),
+('Force Push', 15, 0, 'REPUBLIC'),
+('Force Meditation', 0, 10, 'REPUBLIC'),
+('Blaster Deflection', 10, 0, 'REPUBLIC');
 
 INSERT INTO equipments (name, attack_points, health_restorer, stuff_type) VALUES
 ('Blaster Rifle', 20, 0, 'WEAPON'),
