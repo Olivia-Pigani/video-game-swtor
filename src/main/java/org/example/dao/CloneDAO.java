@@ -6,6 +6,7 @@ import org.example.models.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CloneDAO extends BaseDAO<IsClone> {
@@ -21,7 +22,7 @@ public class CloneDAO extends BaseDAO<IsClone> {
         String query = "INSERT INTO characters (name, light_saber, health, hasForce, team) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement statement = this._connection.prepareStatement(query);
 
-        if (element instanceof RepublicSoldier){
+        if (element instanceof RepublicSoldier) {
             RepublicSoldier republicSoldier = (RepublicSoldier) element;
 
             statement.setString(1, republicSoldier.getName());
@@ -63,7 +64,7 @@ public class CloneDAO extends BaseDAO<IsClone> {
 
         } else if (element instanceof Trooper) {
             Trooper trooper = (Trooper) element;
-            statement.setInt(1,trooper.getId());
+            statement.setInt(1, trooper.getId());
         }
 
 
@@ -73,11 +74,46 @@ public class CloneDAO extends BaseDAO<IsClone> {
 
     @Override
     public IsClone getById(int id) throws SQLException {
+        IsClone isClone = null;
+        request = "SELECT * FROM characters WHERE id = ?";
+        statement = _connection.prepareStatement(request);
+        statement.setInt(1, id);
+        resultSet = statement.executeQuery();
+        if (resultSet.next()) {
+            String team = resultSet.getString("team");
+            if (team.equals(Team.REPUBLIC.toString())) {
+                RepublicSoldier republicSoldier = new RepublicSoldier();
+                return republicSoldier;
+            } else if (team.equals(Team.SITH.toString())) {
+                Trooper trooper = new Trooper();
+                return trooper;
+            }
+        }
         return null;
     }
 
+
     @Override
     public List<IsClone> getAll() throws SQLException {
-    return null;
+        List<IsClone> clones = new ArrayList<>();
+        String query = "SELECT * FROM characters";
+        PreparedStatement statement = this._connection.prepareStatement(query);
+
+        resultSet = statement.executeQuery();
+        while (resultSet.next()) {
+            String team = resultSet.getString("team");
+
+            if (team.equals(Team.REPUBLIC.toString())) {
+                RepublicSoldier soldier = new RepublicSoldier();
+
+                clones.add(soldier);
+            } else if (team.equals(Team.SITH.toString())) {
+
+                Trooper trooper = new Trooper();
+
+                clones.add(trooper);
+            }
+        }
+        return clones;
     }
 }

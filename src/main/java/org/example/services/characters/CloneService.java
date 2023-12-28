@@ -46,4 +46,9 @@ public class CloneService {
     }
 
 
+    public void removeDeadCloneFromDb (IsClone isClone){
+
+    }
+
+
 }
