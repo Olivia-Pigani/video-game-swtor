@@ -1,4 +1,4 @@
-package org.example.dao;
+package org.example.dao.bases;
 
 import org.example.models.Equipment;
 
@@ -11,6 +11,6 @@ import java.util.List;
 public interface StuffBaseDAO<T> {
 
     public abstract T getRandomOfEachType(String type) throws SQLException;
-    public abstract List<T> getRandomSet(T element) throws SQLException;
+    public abstract List<T> getRandomSet() throws SQLException;
 
 }

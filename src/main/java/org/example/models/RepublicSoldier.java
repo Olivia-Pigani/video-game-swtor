@@ -6,25 +6,21 @@ import org.example.models.factories.NonForceUser;
 import java.util.List;
 
 @Data
-public class RepublicSoldier implements NonForceUser {
+public class RepublicSoldier implements IsClone, NonForceUser, Cloneable {
 
 
     private int id;
-    final String name = null;
-    private int healthPoints;
-    List<Equipment> equipments;
+    final String name = "republic soldier";
+    final boolean lightSaber = false;
+    private int healthPoints = 100;
+    private final boolean hasForce = false;
     private Team team = Team.REPUBLIC;
+    List<Equipment> equipments;
 
 
     public RepublicSoldier() {
     }
 
-    public RepublicSoldier(int id, int healthPoints, List<Equipment> equipments, Team team) {
-        this.id = id;
-        this.healthPoints = healthPoints;
-        this.equipments = equipments;
-        this.team = team;
-    }
 
     @Override
     public NonForceUser clone() {

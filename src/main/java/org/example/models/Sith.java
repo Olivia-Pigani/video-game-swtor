@@ -11,9 +11,10 @@ public class Sith implements ForceUser {
     private int id;
     String name;
     private boolean light_saber;
-    private List<Power> powers;
     private int healthPoints;
+    private final boolean hasForce = true;
     private final Team team = Team.SITH;
+    private List<Power> powers;
 
     public Sith() {
     }

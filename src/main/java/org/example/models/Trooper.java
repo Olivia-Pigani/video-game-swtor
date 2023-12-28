@@ -6,14 +6,16 @@ import org.example.models.factories.NonForceUser;
 import java.util.List;
 
 @Data
-public class Trooper implements NonForceUser, Cloneable {
+public class Trooper implements IsClone,NonForceUser, Cloneable {
 
 
     private int id;
     final String name = "trooper";
-    private int healthPoints;
-    List<Equipment> equipments;
+    final boolean lightSaber = false;
+    private int healthPoints = 100;
+    private final boolean hasForce = false;
     private final Team team = Team.SITH;
+    List<Equipment> equipments;
 
     public Trooper() {
     }

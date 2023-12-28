@@ -1,8 +1,9 @@
 package org.example.dao;
 
+import org.example.dao.bases.BaseDAO;
+import org.example.dao.bases.StuffBaseDAO;
 import org.example.models.Equipment;
 import org.example.models.StuffType;
-import org.example.utils.DatabaseSingleton;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public class EquipmentDAO extends BaseDAO<Equipment> implements StuffBaseDAO<Equ
     }
 
     @Override
-    public List<Equipment> getRandomSet(Equipment element) throws SQLException {
+    public List<Equipment> getRandomSet() throws SQLException {
         List<Equipment> equipments = new ArrayList<>();
         equipments.add(getRandomOfEachType("WEAPON"));
         equipments.add(getRandomOfEachType("GRENADE"));
