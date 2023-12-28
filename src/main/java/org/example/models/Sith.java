@@ -1,7 +1,7 @@
 package org.example.models;
 
 import lombok.Data;
-import org.example.models.factories.abstractfactory.ForceUser;
+import org.example.models.factories.ForceUser;
 
 import java.util.List;
 
@@ -9,16 +9,58 @@ import java.util.List;
 public class Sith implements ForceUser {
 
     private int id;
+    String name;
     private boolean light_saber;
     private List<Power> powers;
     private int healthPoints;
     private final Team team = Team.SITH;
 
-
-    public Sith(int id, boolean light_saber, List<Power> powers, int healthPoints) {
-        this.id = id;
-        this.light_saber = light_saber;
-        this.powers = powers;
-        this.healthPoints = healthPoints;
+    public Sith() {
     }
+
+    public Sith(Builder builder){
+        this.name=builder.name;
+        this.light_saber=builder.light_saber;
+        this.powers=builder.powers;
+        this.healthPoints=builder.healthPoints;
+    }
+
+
+
+    public class Builder {
+
+        String name;
+        private boolean light_saber;
+        private List<Power> powers;
+        private int healthPoints;
+        private final Team team = Team.SITH;
+
+        public Builder name (String name){
+            this.name=name;
+            return this;
+        }
+        public Builder powers (List<Power> powers){
+            this.powers=powers;
+            return this;
+        }
+        public Builder light_saber (boolean light_saber){
+            this.light_saber=light_saber;
+            return this;
+        }
+        public Builder healthPoints (int healthPoints){
+            this.healthPoints=healthPoints;
+            return this;
+        }
+
+       public Sith build(){
+            return new Sith(this);
+       }
+
+
+
+
+
+
+    }
+
 }

@@ -16,11 +16,10 @@ public class Main {
         try {
             connection = DatabaseSingleton.getConnection();
             statement = connection.createStatement();
-            String query = "SELECT * FROM characters"; // Remplacez 'ma_table' par le nom de votre table
+            String query = "SELECT * FROM characters";
             resultSet = statement.executeQuery(query);
 
             while (resultSet.next()) {
-                // Exemple : Si votre table a des colonnes 'id' et 'nom'
                 int id = resultSet.getInt("id");
                 String nom = resultSet.getString("name");
 
@@ -32,8 +31,7 @@ public class Main {
             try {
                 if (resultSet != null) resultSet.close();
                 if (statement != null) statement.close();
-                // Ne fermez pas la connexion si vous l'utilisez ailleurs dans l'application
-                // DatabaseSingleton.closeConnection();
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }

@@ -1,7 +1,7 @@
 package org.example.models;
 
 import lombok.Data;
-import org.example.models.factories.abstractfactory.NonForceUser;
+import org.example.models.factories.NonForceUser;
 
 import java.util.List;
 
@@ -10,13 +10,16 @@ public class Trooper implements NonForceUser {
 
 
     private int id;
+    final String name = "trooper";
     private int healthPoints;
     List<Equipment> equipments;
     private final Team team = Team.SITH;
 
-    public Trooper(int id, int healthPoints, List<Equipment> equipments) {
-        this.id = id;
-        this.healthPoints = healthPoints;
-        this.equipments = equipments;
+    public Trooper() {
+    }
+
+    @Override
+    public NonForceUser clone() {
+
     }
 }

@@ -9,7 +9,6 @@ public class Equipment {
     String name;
     private int attackPoints;
     private int healthRestorer;
-
     StuffType stuffType;
 
 
