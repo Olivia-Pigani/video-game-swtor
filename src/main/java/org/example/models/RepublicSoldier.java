@@ -15,10 +15,23 @@ public class RepublicSoldier implements NonForceUser {
     List<Equipment> equipments;
     private Team team = Team.REPUBLIC;
 
-    public RepublicSoldier(int id,  int healthPoints, List<Equipment> equipments, Team team) {
+
+    public RepublicSoldier() {
+    }
+
+    public RepublicSoldier(int id, int healthPoints, List<Equipment> equipments, Team team) {
         this.id = id;
         this.healthPoints = healthPoints;
         this.equipments = equipments;
         this.team = team;
+    }
+
+    @Override
+    public NonForceUser clone() {
+        try {
+            return (RepublicSoldier) super.clone();
+        }catch (CloneNotSupportedException e){
+            throw new AssertionError();
+        }
     }
 }

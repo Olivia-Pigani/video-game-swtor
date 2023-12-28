@@ -19,4 +19,11 @@ public class Equipment {
         this.healthRestorer = healthRestorer;
         this.stuffType = stuffType;
     }
+
+    public Equipment(String name, int attackPoints, int healthRestorer, StuffType stuffType) {
+        this.name = name;
+        this.attackPoints = attackPoints;
+        this.healthRestorer = healthRestorer;
+        this.stuffType = stuffType;
+    }
 }

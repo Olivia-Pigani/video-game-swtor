@@ -6,7 +6,7 @@ import org.example.models.factories.NonForceUser;
 import java.util.List;
 
 @Data
-public class Trooper implements NonForceUser {
+public class Trooper implements NonForceUser, Cloneable {
 
 
     private int id;
@@ -20,6 +20,10 @@ public class Trooper implements NonForceUser {
 
     @Override
     public NonForceUser clone() {
-
+        try {
+         return (Trooper) super.clone();
+        } catch (CloneNotSupportedException e){
+            throw new AssertionError();
+        }
     }
 }
