@@ -1,6 +1,8 @@
 package org.example;
 
 import org.example.utils.DatabaseSingleton;
+import org.example.models.GameSingleton;
+
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -9,6 +11,16 @@ import java.sql.Statement;
 
 public class Main {
     public static void main(String[] args) {
+      
+      
+      
+        GameSingleton game = GameSingleton.getInstance();
+//        GameSingleton game1 = GameSingleton.getInstance();
+
+//        System.out.println(game1);
+        System.out.println(game);
+      
+      
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
@@ -36,5 +48,6 @@ public class Main {
                 e.printStackTrace();
             }
         }
-    }
-}
+
+
+
