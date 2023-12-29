@@ -23,25 +23,31 @@ public class PowerDAO extends BaseDAO<Power> implements PowerBaseDAO<Power> {
     // get all powers by team name with PowerBaseDAO
     @Override
     public List<Power> getAllPowersByTeam(String teamSide) throws SQLException {
-        request = "SELECT * FROM powers WHERE team = ? LIMIT 5";
-        statement = _connection.prepareStatement(request);
-        statement.setString(1,teamSide);
-        resultSet = statement.executeQuery();
-        Team team = Team.valueOf(resultSet.getString("team"));
         List<Power> teamPowers = new ArrayList<>();
+        try {
+            request = "SELECT * FROM powers WHERE team = ? ORDER BY RANDOM() LIMIT 5";
+            statement = _connection.prepareStatement(request);
+            statement.setString(1,teamSide);
+            resultSet = statement.executeQuery();
 
-        if (resultSet.next()){
-            teamPowers.add(new Power(
-                    resultSet.getInt("id"),
-                    resultSet.getString("name"),
-                    resultSet.getInt("attack_points"),
-                    resultSet.getInt("health_restorer"),
-                    team
+            while (resultSet.next()){
+                Team team = Team.valueOf(resultSet.getString("team"));
+                teamPowers.add(new Power(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getInt("attack_points"),
+                        resultSet.getInt("health_restorer"),
+                        team
 
 
 
-            ));
+                ));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+
         }
+
         return teamPowers;
 
     }

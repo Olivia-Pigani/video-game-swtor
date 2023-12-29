@@ -4,9 +4,11 @@ import org.example.dao.bases.BaseDAO;
 import org.example.dao.bases.PowerBaseDAO;
 import org.example.models.Jedi;
 import org.example.models.Power;
+import org.example.models.Sith;
 import org.example.models.Team;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -17,6 +19,34 @@ public class JediDAO extends BaseDAO<Jedi>  {
     public JediDAO(Connection connection) {
         super(connection);
     }
+
+
+
+
+    // Pick one jedi in the database randomly
+
+    public Jedi getOneRandomJedi() throws SQLException{
+        Jedi randomJedi = null;
+        try {
+            request = "SELECT * FROM characters WHERE team = 'REPUBLIC' ORDER BY RANDOM() LIMIT 1";
+            PreparedStatement preparedStatement = _connection.prepareStatement(request);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()){
+                Jedi.Builder jediBuilder = new Jedi.Builder()
+                        .name(resultSet.getString("name"))
+                        .light_saber(resultSet.getBoolean("light_saber"))
+                        .healthPoints(resultSet.getInt("health"));
+
+                randomJedi = jediBuilder.build();
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return randomJedi;
+    }
+
+
 
     // CRUD with BaseDAO
 

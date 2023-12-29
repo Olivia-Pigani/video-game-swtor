@@ -1,11 +1,11 @@
 package org.example.dao;
 
 import org.example.dao.bases.BaseDAO;
-import org.example.models.Jedi;
 import org.example.models.Sith;
 import org.example.models.Team;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -15,6 +15,32 @@ public class SithDAO extends BaseDAO<Sith> {
     public SithDAO(Connection connection) {
         super(connection);
     }
+
+
+    // Pick one sith in the database randomly
+
+    public Sith getOneRandomSith() throws SQLException{
+        Sith randomSith = null;
+        try {
+            request = "SELECT * FROM characters WHERE team = 'SITH' ORDER BY RANDOM() LIMIT 1";
+            PreparedStatement preparedStatement = _connection.prepareStatement(request);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()){
+                Sith.Builder sithBuilder = new Sith.Builder()
+                        .name(resultSet.getString("name"))
+                        .light_saber(resultSet.getBoolean("light_saber"))
+                        .healthPoints(resultSet.getInt("health"));
+
+                randomSith = sithBuilder.build();
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return randomSith;
+    }
+
+
 
 // CRUD with BaseDAO
 
