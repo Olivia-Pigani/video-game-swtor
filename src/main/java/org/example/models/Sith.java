@@ -28,7 +28,7 @@ public class Sith implements ForceUser {
 
 
 
-    public class Builder {
+    public static class Builder {
 
         String name;
         private boolean light_saber;

@@ -29,7 +29,7 @@ public class Jedi implements ForceUser {
 
 
 
-    public class Builder {
+    public static class Builder {
 
         String name;
         private boolean light_saber;
