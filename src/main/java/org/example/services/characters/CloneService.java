@@ -46,8 +46,24 @@ public class CloneService {
     }
 
 
-    public void removeDeadCloneFromDb (IsClone isClone){
+    public void removeDeadCloneFromDb (IsClone isClone) throws SQLException{
+        try {
 
+            if (isClone instanceof RepublicSoldier){
+                RepublicSoldier republicSoldier = (RepublicSoldier) isClone;
+                if (republicSoldier.getHealthPoints()<=0){
+                    cloneDAO.delete(republicSoldier);
+                }
+            } else if (isClone instanceof Trooper) {
+                Trooper trooper = (Trooper) isClone;
+                if (trooper.getHealthPoints()<=0){
+                    cloneDAO.delete(trooper);
+                }
+            }
+        }catch (SQLException e){
+            throw new SQLException("Error while attempting clone deletion ! ", e);
+
+        }
     }
 
 
