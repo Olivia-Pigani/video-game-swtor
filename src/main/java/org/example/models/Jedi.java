@@ -2,6 +2,8 @@ package org.example.models;
 
 import lombok.Data;
 import org.example.models.factories.ForceUser;
+import org.example.services.game.states.AliveState;
+import org.example.services.game.states.CharacterState;
 
 import java.util.List;
 
@@ -11,10 +13,11 @@ public class Jedi implements ForceUser {
     private int id;
     String name;
     private boolean light_saber;
-    private int healthPoints;
+    private int healthPoints = 100;
     private final boolean hasForce = true;
     private final Team team = Team.REPUBLIC;
     private List<Power> powers;
+    private CharacterState characterState;
 
 
     public Jedi() {
@@ -25,9 +28,23 @@ public class Jedi implements ForceUser {
         this.light_saber=builder.light_saber;
         this.powers=builder.powers;
         this.healthPoints=builder.healthPoints;
+        this.characterState = builder.characterState;
     }
 
+    @Override
+    public void changeState(CharacterState changeState) {
 
+    }
+
+    @Override
+    public void doThings() {
+
+    }
+
+    @Override
+    public void updateHealthPoints(int healthChange) {
+
+    }
 
     public static class Builder {
 
@@ -36,6 +53,7 @@ public class Jedi implements ForceUser {
         private List<Power> powers;
         private int healthPoints;
         private final Team team = Team.REPUBLIC;
+        public CharacterState characterState;
 
         public Builder name (String name){
             this.name=name;
@@ -53,6 +71,14 @@ public class Jedi implements ForceUser {
             this.healthPoints=healthPoints;
             return this;
         }
+
+        public Builder characterState ( CharacterState characterState){
+            this.characterState = characterState;
+            return this;
+        }
+
+
+
 
         public Jedi build(){
             return new Jedi(this);
