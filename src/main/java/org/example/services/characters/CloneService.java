@@ -3,8 +3,10 @@ package org.example.services.characters;
 import org.example.dao.CloneDAO;
 import org.example.dao.EquipmentDAO;
 import org.example.models.*;
+import org.example.services.game.composite.GameComponent;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CloneService {
@@ -18,31 +20,27 @@ public class CloneService {
         this.equipmentDAO = equipmentDAO;
     }
 
-    private void produceClones(Team team, int nbOfClone, List<Equipment> equipments) throws SQLException {
+    public   List<GameComponent> produceClones(Team team, int nbOfClone ) throws SQLException {
+        List<GameComponent> clones = new ArrayList<>();
 
         for (int i = 0; i < nbOfClone; i++) {
             if (team == Team.REPUBLIC) {
                 RepublicSoldier republicSoldier = new RepublicSoldier();
-                republicSoldier.setEquipments(equipments);
+                republicSoldier.setEquipments(getRandomEquipment ());
                 cloneDAO.save(republicSoldier);
             } else if (team == Team.SITH) {
                 Trooper trooper = new Trooper();
-                trooper.setEquipments(equipments);
+                trooper.setEquipments(getRandomEquipment ());
                 cloneDAO.save(trooper);
             } else {
                 throw new SQLException(" incorrect team name ! ");
             }
         }
+        return clones;
     }
 
-    public void clonesInitializer() throws SQLException {
-
-
-        List<Equipment> randomizedEquipmentSet = equipmentDAO.getRandomSet();
-
-        produceClones(Team.REPUBLIC, 3, randomizedEquipmentSet);
-        produceClones(Team.SITH, 3, randomizedEquipmentSet);
-
+    private List<Equipment> getRandomEquipment () throws SQLException {
+        return equipmentDAO.getRandomSet();
     }
 
 

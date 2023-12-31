@@ -44,10 +44,16 @@ public class EquipmentDAO extends BaseDAO<Equipment> implements StuffBaseDAO<Equ
     @Override
     public List<Equipment> getRandomSet() throws SQLException {
         List<Equipment> equipments = new ArrayList<>();
-        equipments.add(getRandomOfEachType("WEAPON"));
-        equipments.add(getRandomOfEachType("GRENADE"));
-        equipments.add(getRandomOfEachType("MEDKIT"));
+        try {
+            equipments.add(getRandomOfEachType("WEAPON"));
+            equipments.add(getRandomOfEachType("GRENADE"));
+            equipments.add(getRandomOfEachType("MEDKIT"));
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
         return equipments;
+
     }
 
 

@@ -2,13 +2,15 @@ package org.example.models;
 
 import lombok.Data;
 import org.example.models.factories.ForceUser;
+import org.example.services.game.composite.GameComponent;
 import org.example.services.game.states.AliveState;
 import org.example.services.game.states.CharacterState;
+import org.example.services.game.states.DeadState;
 
 import java.util.List;
 
 @Data
-public class Jedi implements ForceUser {
+public class Jedi implements ForceUser, GameComponent {
 
     private int id;
     String name;
@@ -21,6 +23,7 @@ public class Jedi implements ForceUser {
 
 
     public Jedi() {
+        this.characterState = new AliveState();
     }
 
     public Jedi(Builder builder){
@@ -32,18 +35,26 @@ public class Jedi implements ForceUser {
     }
 
     @Override
-    public void changeState(CharacterState changeState) {
+    public boolean isAlive() {
+       return this.characterState instanceof AliveState;
+    }
 
+    @Override
+    public void changeState(CharacterState changeState) {
+        this.characterState=changeState;
     }
 
     @Override
     public void doThings() {
-
+        this.characterState.doThings();
     }
 
     @Override
     public void updateHealthPoints(int healthChange) {
-
+        this.healthPoints += healthChange;
+        if (this.healthPoints<=0){
+            changeState(new DeadState());
+        }
     }
 
     public static class Builder {

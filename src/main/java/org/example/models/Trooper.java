@@ -2,6 +2,7 @@ package org.example.models;
 
 import lombok.Data;
 import org.example.models.factories.NonForceUser;
+import org.example.services.game.composite.GameComponent;
 import org.example.services.game.states.AliveState;
 import org.example.services.game.states.CharacterState;
 import org.example.services.game.states.DeadState;
@@ -9,7 +10,7 @@ import org.example.services.game.states.DeadState;
 import java.util.List;
 
 @Data
-public class Trooper implements IsClone,NonForceUser, Cloneable {
+public class Trooper implements IsClone,NonForceUser, Cloneable, GameComponent {
 
 
     private int id;
@@ -27,6 +28,10 @@ public class Trooper implements IsClone,NonForceUser, Cloneable {
         this.characterState = new AliveState();
     }
 
+    @Override
+    public boolean isAlive() {
+        return this.characterState instanceof AliveState;
+    }
 
     // State
     @Override
@@ -36,7 +41,7 @@ public class Trooper implements IsClone,NonForceUser, Cloneable {
 
     @Override
     public void doThings() {
-
+        this.characterState.doThings();
     }
 
     @Override

@@ -8,6 +8,7 @@ public class ForceUserFactory implements CharactersFactory {
 
     @Override
     public ForceUser produceForceUser(String type) {
+        type = type.toLowerCase();
         if (type.equals("jedi")){
             return new Jedi();
         } else if (type.equals("sith")) {

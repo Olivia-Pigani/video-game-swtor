@@ -2,13 +2,15 @@ package org.example.models;
 
 import lombok.Data;
 import org.example.models.factories.ForceUser;
+import org.example.services.game.composite.GameComponent;
 import org.example.services.game.states.AliveState;
 import org.example.services.game.states.CharacterState;
+import org.example.services.game.states.DeadState;
 
 import java.util.List;
 
 @Data
-public class Sith implements ForceUser {
+public class Sith implements ForceUser, GameComponent {
 
     private int id;
     String name;
@@ -21,6 +23,7 @@ public class Sith implements ForceUser {
 
 
     public Sith() {
+        this.characterState = new AliveState();
     }
 
     public Sith(Builder builder){
@@ -28,22 +31,30 @@ public class Sith implements ForceUser {
         this.light_saber=builder.light_saber;
         this.powers=builder.powers;
         this.healthPoints=builder.healthPoints;
-        this.characterState = builder.characterState;
+    }
+
+    @Override
+    public boolean isAlive() {
+        return this.characterState instanceof AliveState;
     }
 
     @Override
     public void changeState(CharacterState changeState) {
-
+        this.characterState=changeState;
     }
 
     @Override
     public void doThings() {
+        this.characterState.doThings();
 
     }
 
     @Override
     public void updateHealthPoints(int healthChange) {
-
+        this.healthPoints += healthChange;
+        if (this.healthPoints<=0){
+            changeState(new DeadState());
+        }
     }
 
     public static class Builder {
@@ -53,7 +64,6 @@ public class Sith implements ForceUser {
         private List<Power> powers;
         private int healthPoints;
         private final Team team = Team.SITH;
-        public CharacterState characterState;
 
         public Builder name (String name){
             this.name=name;
@@ -69,11 +79,6 @@ public class Sith implements ForceUser {
         }
         public Builder healthPoints (int healthPoints){
             this.healthPoints=healthPoints;
-            return this;
-        }
-
-        public Builder characterState ( CharacterState characterState ){
-            this.characterState = characterState;
             return this;
         }
 
