@@ -66,8 +66,16 @@ public static void printMenu(){
     while (true){
         System.out.println("=== Character management ===");
         System.out.println("1 - Make a character ");
-        System.out.println("3 - See all characters ");
+        System.out.println("2 - See all characters ");
 
+    }
+
+    switch (true){
+        case 1:
+            makeACharacter(); // save
+            break;
+        case 2:
+            seeAllCharacters(); // print all character by team side (to ask), can make update, delete.
     }
 
 
