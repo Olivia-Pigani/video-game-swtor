@@ -24,8 +24,6 @@ public class GameService {
 
     private void TeamsInitialization() throws SQLException {
 
-
-
         teamSith = new TeamComposite();
         teamSith.addAMember(forceUserService.getOneRandomSith());
         teamSith.addAMember(cloneService.produceClones(Team.SITH,3));
@@ -33,6 +31,7 @@ public class GameService {
         teamRepublic = new TeamComposite();
         teamRepublic.addAMember(forceUserService.getOneRandomJedi());
         teamRepublic.addAMember(cloneService.produceClones(Team.REPUBLIC,3));
+
     }
 
 
