@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.models.Team;
+
 import java.util.Scanner;
 
 public class IHM {
@@ -81,12 +83,12 @@ public class IHM {
             System.out.println("3 - Main menu");
         }
 
-        switch (true) {
+        switch (choice) {
             case 1:
-                makeACharacter(); // save
+                makeACharacter();
                 break;
             case 2:
-                seeAllCharacters(); // print all character by team side (to ask), can make update, delete.
+                seeAllCharacters();
                 break;
             case 3:
                 printMenu();
@@ -98,6 +100,8 @@ public class IHM {
 
 
     }
+
+
 
 
     private static void printFightMenu() {
@@ -112,10 +116,10 @@ public class IHM {
 
             switch (choice){
                 case 1:
-                    // start game user is sith
+                    choosingTeam("SITH");
                     break;
                 case 2:
-                    // start game user is republic
+                    choosingTeam("REPUBLIC");
                     break;
                 case 3:
                     printMenu();
@@ -130,6 +134,51 @@ public class IHM {
         }
 
     }
+
+
+
+    private static void makeACharacter() {
+
+        Team newCharacTeam;
+        String newCharacName;
+        boolean light_saber = false;
+
+
+
+        System.out.println("Welcome to the character maker !");
+
+        System.out.println("What will be the team side ? ");
+        System.out.println("1 - SITH");
+        System.out.println("2 - REPUBLIC");
+        scanner.nextLine();
+        int menuChoice = scanner.nextInt();
+        scanner.nextLine();
+
+        switch (true){
+            case 1:
+
+        }
+
+
+
+
+
+
+
+    }
+    private static void seeAllCharacters() {
+        //show all characters  team  and republic two colonnes
+
+
+        // getById a character
+        // menu : update , delete characters
+    }
+    private static void choosingTeam(String team) {
+        // choose team, start game()
+    }
+
+
+
 
 
 }
