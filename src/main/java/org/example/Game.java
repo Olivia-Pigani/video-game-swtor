@@ -1,13 +1,14 @@
 package org.example;
 
+import org.example.services.game.GameService;
+
 public class Game {
 
     private static volatile Game gameInstance = null;
+    private GameService gameService;
 
     private Game() {
-    }
-
-    ;
+    };
 
     public static Game getInstance() {
         if (gameInstance == null) {
@@ -24,6 +25,14 @@ public class Game {
     }
 
 
+
+    public void startGame(){
+
+    }
+
+    public void endGame(){
+
+    };
 
 
 
