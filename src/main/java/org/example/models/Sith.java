@@ -13,10 +13,10 @@ import java.util.List;
 public class Sith implements ForceUser, GameComponent {
 
     private int id;
-    String name;
+    String name = "Sith master";
     private boolean light_saber;
     private int healthPoints = 100;
-    private final boolean hasForce = true;
+    private final Boolean hasForce = true;
     private final Team team = Team.SITH;
     private List<Power> powers;
     private CharacterState characterState;
