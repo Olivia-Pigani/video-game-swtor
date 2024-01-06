@@ -35,9 +35,7 @@ public class Main {
 //        }
 
         Game game = Game.getInstance();
-        System.out.println(game);
-        Game game1 = Game.getInstance();
-        System.out.println(game1);
+
 
 
 

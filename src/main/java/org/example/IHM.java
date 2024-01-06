@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class IHM {
 
-    private Scanner scanner = new Scanner(System.in);
+    private  Scanner scanner = new Scanner(System.in);
     private static boolean run = true;
 
     private ForceUserService forceUserService;
@@ -68,7 +68,8 @@ public class IHM {
             System.out.println("3 - Quit the program");
 
         }
-
+        choice = scanner.nextInt();
+        scanner.nextLine();
         switch (choice) {
             case 1:
                 printCharacterMenu();
@@ -96,7 +97,8 @@ public class IHM {
             System.out.println("2 - See all characters ");
             System.out.println("3 - Main menu");
         }
-
+        choice = scanner.nextInt();
+        scanner.nextLine();
         switch (choice) {
             case 1:
                 makeAForceUser();
@@ -125,7 +127,8 @@ public class IHM {
             System.out.println("2 - REPUBLIC");
             System.out.println("3 - Main menu");
 
-
+            choice = scanner.nextInt();
+            scanner.nextLine();
             switch (choice) {
                 case 1:
                     choosingTeam("SITH");
@@ -194,6 +197,8 @@ public class IHM {
             System.out.println("2. Delete a character");
             System.out.println("3. Go back to previous menu");
 
+            choice = scanner.nextInt();
+            scanner.nextLine();
             switch (choice) {
                 case 1:
                     updateACharacter();
@@ -265,8 +270,13 @@ public class IHM {
 
     }
 
-    private void choosingTeam(String team) {
-        // choose team, start game()
+    private void choosingTeam(String team) throws SQLException {
+    Team chosenTeam = team.equals("SITH") ? Team.SITH : Team.REPUBLIC;
+    Game game = Game.getInstance();
+    game.playGame(chosenTeam);
+
+
+
     }
 
 
