@@ -47,13 +47,11 @@ public class SithDAO extends BaseDAO<Sith> {
 
     @Override
     public boolean save(Sith element) throws SQLException {
-        request = "INSERT INTO characters (name, light_saber, health, hasForce,team)" +
+        request = "INSERT INTO characters (name, light_saber,team)" +
                 "VALUES (?,?,?,?,?)";
         statement = _connection.prepareStatement(request, Statement.RETURN_GENERATED_KEYS);
         statement.setString(1, element.getName());
         statement.setBoolean(2, element.isLight_saber());
-        statement.setInt(3, element.getHealthPoints());
-        statement.setBoolean(4, element.isHasForce());
 
         if (element.getTeam().equals(Team.SITH)) {
             statement.setString(5, "SITH");
@@ -67,7 +65,7 @@ public class SithDAO extends BaseDAO<Sith> {
     }
 
     @Override
-    public boolean update(Sith element) throws SQLException {
+    public Sith update(Sith element) throws SQLException {
         request = "UPDATE characters SET name = ?, light_saber = ? WHERE id = ?";
         statement = _connection.prepareStatement(request);
         statement.setString(1, element.getName());
@@ -75,16 +73,23 @@ public class SithDAO extends BaseDAO<Sith> {
 
         statement.setInt(3, element.getId());
         int nbRows = statement.executeUpdate();
-        return nbRows == 1;
+        if(nbRows == 1){
+            return element;
+        }else {
+            return null;
+        }
     }
 
     @Override
-    public boolean delete(Sith element) throws SQLException {
+    public void delete(int id) throws SQLException {
         request = "DELETE FROM characters WHERE id = ?";
         statement = _connection.prepareStatement(request);
-        statement.setInt(1, element.getId());
+        statement.setInt(1, id);
         int nbRows = statement.executeUpdate();
-        return nbRows == 1;
+        if (nbRows == 1){
+            System.out.println("The character has been deleted ! ");
+        }
+        System.out.println("Something wrong during the deletion ! ");
     }
 
     @Override

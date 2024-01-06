@@ -49,8 +49,8 @@ public class CloneDAO extends BaseDAO<IsClone> {
 
     // no need to update, there are clones, and they will be removed from database at the end of the fight
     @Override
-    public boolean update(IsClone element) throws SQLException {
-        return false;
+    public IsClone update(IsClone element) throws SQLException {
+        return null;
     }
 
     @Override

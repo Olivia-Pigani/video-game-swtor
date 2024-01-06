@@ -22,8 +22,8 @@ public abstract class BaseDAO<T> {
 
 
     public abstract boolean save(T element) throws SQLException;
-    public abstract boolean update(T element) throws SQLException;
-    public abstract boolean delete(T element) throws SQLException;
+    public abstract T update(T element) throws SQLException;
+    public abstract void delete(int id) throws SQLException;
 
     public abstract T getById(int id) throws SQLException;
 

@@ -1,8 +1,13 @@
 package org.example;
 
+import org.example.models.Jedi;
+import org.example.models.Sith;
 import org.example.models.Team;
+import org.example.models.factories.ForceUser;
 import org.example.services.characters.ForceUserService;
 
+import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 
 public class IHM {
@@ -20,7 +25,7 @@ public class IHM {
         this.forceUserService = forceUserService;
     }
 
-    public void printMenu() {
+    public void printMenu() throws SQLException {
         System.out.println("""
                 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠶⠶⠿⢿⣿⣿⣿⣿⣷⣶⣶⣶⣤⣤⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
                 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⣀⣴⣶⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -83,7 +88,7 @@ public class IHM {
     }
 
 
-    private void printCharacterMenu() {
+    private void printCharacterMenu() throws SQLException {
 
         while (run) {
             System.out.println("=== Character management ===");
@@ -94,7 +99,7 @@ public class IHM {
 
         switch (choice) {
             case 1:
-                makeACharacter();
+                makeAForceUser();
                 break;
             case 2:
                 seeAllCharacters();
@@ -111,7 +116,7 @@ public class IHM {
     }
 
 
-    private void printFightMenu() {
+    private void printFightMenu() throws SQLException {
 
         while (run) {
             System.out.println("=== Fight Menu ===");
@@ -141,7 +146,7 @@ public class IHM {
     }
 
 
-    private void makeACharacter() {
+    private void makeAForceUser() {
 
         int newCharacTeam;
         boolean hasLightSaber = false;
@@ -162,20 +167,102 @@ public class IHM {
         hasLightSaber = scanner.nextBoolean();
         scanner.nextLine();
 
-       if(forceUserService.makeAForceUser(newCharacTeam,hasLightSaber,name) != null){
-           System.out.println("Your character making is a success ! ");
-       }else {
-           System.out.println("Something wrong in your character making !  ! ");
-       };
+        if (forceUserService.makeAForceUser(newCharacTeam, hasLightSaber, name) != null) {
+            System.out.println("Your character making is a success ! ");
+        } else {
+            System.out.println("Something wrong in your character making !  ");
+        }
+        ;
 
     }
 
-    private void seeAllCharacters() {
+    private void seeAllCharacters() throws SQLException {
         //show all characters  team  and republic two colonnes
 
+        while (run) {
 
-        // getById a character
+            List<List<ForceUser>> allForceUsers = forceUserService.getAllForceUser();
+            for (List<ForceUser> forceUsers : allForceUsers
+            ) {
+                for (ForceUser forceUser : forceUsers
+                ) {
+                    System.out.println(forceUser);
+                }
+            }
+
+            System.out.println("1. Update a character");
+            System.out.println("2. Delete a character");
+            System.out.println("3. Go back to previous menu");
+
+            switch (choice) {
+                case 1:
+                    updateACharacter();
+                    break;
+                case 2:
+                    deleteACharacter();
+                    break;
+                case 3:
+                    printMenu();
+                    break;
+                default:
+                    System.out.println("Wrong input ! ");
+                    seeAllCharacters();
+            }
+
+        }
+
         // menu : update , delete characters
+    }
+
+    private void deleteACharacter() throws SQLException {
+        int characterId;
+        System.out.println("What is the character id to delete ? ");
+        characterId = scanner.nextInt();
+        scanner.nextLine();
+
+        forceUserService.deleteForceUser(characterId);
+
+
+    }
+
+    private void updateACharacter() throws SQLException {
+        int characterId;
+        String newName;
+        String hasLightSaber = null;
+        Sith.Builder builderSith = new Sith.Builder();
+        Jedi.Builder builderJedi = new Jedi.Builder();
+
+        System.out.println("What is the id of the character to update ? ");
+        characterId = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.println("What will be his/her name ? You can put the name or skip");
+         newName = scanner.nextLine().trim();
+        System.out.println("Do he or she has a light saber ? true/false/skip ");
+         hasLightSaber = scanner.nextLine().toLowerCase().trim();
+
+        if (forceUserService.findForceUserById(characterId) instanceof Sith) {
+
+            if (hasLightSaber != null && !hasLightSaber.isEmpty()) {
+                builderSith.light_saber(Boolean.parseBoolean(hasLightSaber));
+            }
+            if (newName != null && !newName.isEmpty()) {
+                builderSith.name(newName);
+            }
+            forceUserService.updateForceUserCharacter(characterId, builderSith.build());
+
+        } else if (forceUserService.findForceUserById(characterId) instanceof Jedi) {
+
+            if (hasLightSaber != null && !hasLightSaber.isEmpty()) {
+                builderJedi.light_saber(Boolean.parseBoolean(hasLightSaber));
+            }
+            if (newName != null && !newName.isEmpty()) {
+                builderJedi.name(newName);
+            }
+            forceUserService.updateForceUserCharacter(characterId, builderJedi.build());
+        }
+
+
     }
 
     private void choosingTeam(String team) {

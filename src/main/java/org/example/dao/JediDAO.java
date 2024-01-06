@@ -57,8 +57,7 @@ public class JediDAO extends BaseDAO<Jedi>  {
         statement = _connection.prepareStatement(request, Statement.RETURN_GENERATED_KEYS);
         statement.setString(1, element.getName());
         statement.setBoolean(2, element.isLight_saber());
-        statement.setInt(3, element.getHealthPoints());
-        statement.setBoolean(4, element.isHasForce());
+
 
         if (element.getTeam().equals(Team.REPUBLIC)) {
             statement.setString(5, "REPUBLIC");
@@ -72,7 +71,7 @@ public class JediDAO extends BaseDAO<Jedi>  {
     }
 
     @Override
-    public boolean update(Jedi element) throws SQLException {
+    public Jedi update(Jedi element) throws SQLException {
         request = "UPDATE characters SET name = ?, light_saber = ? WHERE id = ?";
         statement = _connection.prepareStatement(request);
         statement.setString(1, element.getName());
@@ -80,16 +79,23 @@ public class JediDAO extends BaseDAO<Jedi>  {
 
         statement.setInt(3, element.getId());
         int nbRows = statement.executeUpdate();
-        return nbRows == 1;
+        if (nbRows == 1){
+
+            return element;
+        }
+        return null;
     }
 
     @Override
-    public boolean delete(Jedi element) throws SQLException {
+    public void delete(int id) throws SQLException {
         request = "DELETE FROM characters WHERE id = ?";
         statement = _connection.prepareStatement(request);
-        statement.setInt(1, element.getId());
+        statement.setInt(1, id);
         int nbRows = statement.executeUpdate();
-        return nbRows == 1;
+        if (nbRows == 1){
+            System.out.println("The character has been deleted ! ");
+        }
+        System.out.println("Something wrong during the deletion ! ");
     }
 
     @Override
