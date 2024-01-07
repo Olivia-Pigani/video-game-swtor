@@ -18,4 +18,11 @@ public class Power {
         this.healthRestorer = healthRestorer;
         this.team = team;
     }
+
+    public Power(String name, int attackPoints, int healthRestorer, Team team) {
+        this.name = name;
+        this.attackPoints = attackPoints;
+        this.healthRestorer = healthRestorer;
+        this.team = team;
+    }
 }

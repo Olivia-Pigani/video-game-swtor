@@ -64,23 +64,27 @@ public class GameService {
                     if (choice != 1 && choice != 2) {
                         System.out.println("Not a valid input! Please try again.");
                     }
+
+                    if (actualTeam.equals(chosenTeam)){
+                        switch (choice){
+                            case 1:
+                                // command attack for user
+                                break;
+                            case 2:
+                                // command heal for user
+                                break;
+                        }
+
+                    } else {
+                        machineAction(allMachineTeamMembers);
+
+                    }
+
+
+
                 }while (choice != 1 && choice != 2);
 
 
-                if (actualTeam.equals(chosenTeam)){
-                    switch (choice){
-                        case 1:
-                            // command attack for user
-                            break;
-                        case 2:
-                            // command heal for user
-                            break;
-                    }
-
-                } else {
-                    machineAction(allMachineTeamMembers);
-
-                }
 
             }
         }
